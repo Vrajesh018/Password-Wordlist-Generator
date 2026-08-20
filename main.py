@@ -5,12 +5,42 @@ class passList:
         """ Consttuctor for the class to initialize variables & start program."""
         self.wordLst = []
         self.specialChar = "\"#^*_+-=~`\\|:;',./!@$%&(){}[]<>?"
+        self.exit = False
         self.infoValue = {
             1 : "Name only",
             2 : "Name & DOB",
             3 : "Name, DOB & Account name"
         }
-        self.exit = False
+                
+        self.CommonSubstitutes = {
+            "a": ["4", "@"],
+            "b": ["8"],
+            "c": ["("],
+            "d": ["0"],
+            "e": ["3", "€"],
+            "f": ["ph"],
+            "g": ["6", "9", "&"],
+            "h": ["#", "4"],
+            "i": ["1", "!"],
+            "j": ["]"],
+            "k": ["X"],
+            "l": ["1", "7", "£"],
+            "m": ["nn"],
+            "n": ["/V"],
+            "o": ["0"],
+            "p": ["9"],
+            "q": ["9"],
+            "r": ["2"],
+            "s": ["5", "$", "z"],
+            "t": ["7", "+"],
+            "u": ["v"],
+            "v": ["\\/"],
+            "w": ["vv"],
+            "x": ["%"],
+            "y": ["j"],
+            "z": ["2"]
+        }
+
 
 
     def Welcome(self):
@@ -74,7 +104,6 @@ class passList:
 
         if self.Info_Num >= 3:
             self.accName = accName_input()
-          
 
 if __name__ == "__main__":
     try:
