@@ -133,11 +133,30 @@ class passList:
         if self.Info_Num >= 3:
             self.accName = accName_input()
 
+    def Generator(self):
+        nameLength = len(self.targetName)
+
+        subs_wish = input("Do you want to use extended swaps? [y|n] : ")
+        def singleSwap():
+            with open(f"wordlists\{self.targetName}_Wordlist.txt", "a", encoding="utf-8") as wFile:
+                wFile.write(f"{self.targetName}\n")
+                for i in range(nameLength):
+                    temp = self.targetName
+                    swapLetter = self.advSubstitute[self.targetName[i]] if subs_wish == "y" else self.CommonSubstitutes[self.targetName[i]]
+                    for j in range(len(swapLetter)):
+                        temp = temp[:i] + swapLetter[j] + temp[i + 1 :]
+                        wFile.write(f"{temp}\n")
+
+        singleSwap()
+
+    
 if __name__ == "__main__":
     try:
         while True:
             target = passList()
             target.Welcome()
             target.Target_Info()
+            target.Generator()
+            break
     except KeyboardInterrupt:
         print("\n\n\t\t Program Interrupted...\n")
