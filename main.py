@@ -3,13 +3,13 @@ import random
 class passList:
     def __init__(self):
         """ Consttuctor for the class to initialize variables & start program."""
-        self.wordLst = []
+
         self.specialChar = "\"#^*_+-=~`\\|:;',./!@$%&(){}[]<>?"
         self.exit = False
         self.infoValue = {
             1 : "Name only",
-            2 : "Name & DOB",
-            3 : "Name, DOB & Account name"
+            2 : "Name & Account name",
+            3 : "Name, Account name, DOB"
         }
                 
         self.CommonSubstitutes = {
@@ -76,6 +76,8 @@ class passList:
         col = 25
         row = 6
         pattern = self.specialChar[random.randint(0,17)]
+
+        # Creating Welcome screen pattern 
         for i in range(row):
             if i == 3:
                 print(f"{pattern}\t Password Wordlist Generator! \t\t{pattern}")
@@ -86,10 +88,14 @@ class passList:
                 else:
                     print(" ", end=" ")
             print()
+
+        # Asking number of information, so that program only asks for information user have.
         print("\n How Much information do you have?\n")
+
         for i in self.infoValue:
             print(f"{i}. {self.infoValue[i]}")
-        while True:
+
+        while True:     # While loop & try-except block to handle wrong input from user.
             try:
                 self.Info_Num = int(input("\nEnter Value number : "))
                 if self.Info_Num > 3:
@@ -102,7 +108,9 @@ class passList:
                 break
 
     def Target_Info(self):
+        """ Target_Info function is here to ask for the information user have on the target."""
         def name():
+            """Asks for name of the target"""
             while True:
                 user_input = input("Please enter your name : ")
                 if not user_input.isalpha():
@@ -110,6 +118,7 @@ class passList:
                 else:
                     return user_input
         def DOB():
+            """Asks for date of birth of the target"""
             while True:
                 user_input = input("please enter your DOB in YYYYMMDD format : ")
                 if not user_input.isdigit():
@@ -119,7 +128,9 @@ class passList:
                     continue
                 else:
                     return user_input
+                
         def accName_input():
+            """Asks for account name of the target"""
             while True:
                 user_input = input("Please enter Account Name :")
                 if user_input.strip():
@@ -128,16 +139,22 @@ class passList:
         self.targetName = name()
 
         if self.Info_Num >= 2:
-            self.targetDOB = DOB()
-
-        if self.Info_Num >= 3:
             self.accName = accName_input()
 
-    def Generator(self):
-        nameLength = len(self.targetName)
+        if self.Info_Num >= 3:
+            self.targetDOB = DOB()
 
-        subs_wish = input("Do you want to use extended swaps? [y|n] : ")
+
+    def Generator(self):
+        """ Generator function generates the wordlist with possible password of the target
+            based on common alphabet swaps, patterns, words mix, etc """
+        
+        nameLength = len(self.targetName)
+        subs_wish = input("Do you want to use extended swaps? [y|n] : ")  # asks if advanced_swap dictonary is to used or not.
+
         def singleSwap():
+            """ SingleSwap function only swaps single value from the password with commonly
+                used swap values."""
             with open(f"wordlists\{self.targetName}_Wordlist.txt", "a", encoding="utf-8") as wFile:
                 wFile.write(f"{self.targetName}\n")
                 for i in range(nameLength):
